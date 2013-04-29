@@ -4,17 +4,22 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <!--
     <parameters>
-        <parameter key="axsy_transaction.example.class">Axsy\TransactionBundle\Example</parameter>
+        <parameter key="axsy_transactional.interceptor.class">Axsy\TransactionalBundle\Interception\MethodTransactionalInterceptor</parameter>
+        <parameter key="axsy_transactional.pointcut.class">Axsy\TransactionalBundle\Interception\TransactionalPointcut</parameter>
+        <parameter key="axsy_transactional.resolver.class">Axsy\TransactionalBundle\Resolver\ConnectionResolver</parameter>
     </parameters>
 
     <services>
-        <service id="axsy_transaction.example" class="%axsy_transaction.example.class%">
-            <argument type="service" id="service_id" />
-            <argument>plain_value</argument>
-            <argument>%parameter_name%</argument>
+        <service id="axsy_transactional.pointcut" class="%axsy_transactional.pointcut.class%">
+            <tag name="jms_aop.pointcut" interceptor="axsy_Transactional.interceptor" />
+        </service>
+        <service id="axsy_transactional.interceptor" class="%axsy_transactional.interceptor.class%">
+            <argument type="service" id="doctrine" />
+        </service>
+        <service id="axsy_transactional.resolver" class="%axsy_transactional.resolver.class%">
+            <argument type="service" id="doctrine" />
         </service>
     </services>
-    -->
+
 </container>
