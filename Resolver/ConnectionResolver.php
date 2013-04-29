@@ -2,6 +2,7 @@
 
 namespace Axsy\TransactionalBundle\Resolver;
 
+use Axsy\TransactionalBundle\Metadata\MethodMetadata;
 use Doctrine\Common\Persistence\ConnectionRegistry;
 
 class ConnectionResolver implements ConnectionResolverInterface
@@ -15,6 +16,6 @@ class ConnectionResolver implements ConnectionResolverInterface
 
     public function resolve(MethodMetadata $method)
     {
-        $this->registry->getConnection($method->connection);
+        return $this->registry->getConnection($method->connection);
     }
 }
