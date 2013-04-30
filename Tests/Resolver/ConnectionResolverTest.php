@@ -12,17 +12,14 @@ class ConnectionResolverTest extends \PHPUnit_Framework_TestCase
     public function shouldResolveConnection()
     {
         // given
-
         $resolver = $this->getResolver();
         $metadata = $this->getMethodMetadata();
         $metadata->connection = 'default';
 
         // when
-
         $conn = $resolver->resolve($metadata);
 
         // then
-
         $this->assertInstanceOf('\\Doctrine\\DBAL\\Connection', $conn);
     }
 
