@@ -21,14 +21,7 @@ class MethodMetadata extends BaseMethodMetadata implements EquatableMethodMetada
 
     public function serialize()
     {
-        return serialize(array(
-            $this->class,
-            $this->name,
-            $this->connection,
-            $this->isolation,
-            $this->exceptions,
-            $this->rollbackOnExceptions
-        ));
+        return serialize($this->toArray());
     }
 
     public function unserialize($str)
@@ -46,8 +39,20 @@ class MethodMetadata extends BaseMethodMetadata implements EquatableMethodMetada
         $this->reflection->setAccessible(true);
     }
 
+    public function toArray()
+    {
+        return array(
+            $this->class,
+            $this->name,
+            $this->connection,
+            $this->isolation,
+            $this->exceptions,
+            $this->rollbackOnExceptions
+        );
+    }
+
     public function equalTo(MethodMetadata $metadata)
     {
-        return $this->serialize() === $metadata->serialize();
+        return array_slice($this->toArray(),2) == array_slice($metadata->toArray(),2);
     }
 }

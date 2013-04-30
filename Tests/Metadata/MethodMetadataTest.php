@@ -12,13 +12,31 @@ class MethodMetadataTest extends \PHPUnit_Framework_TestCase
     public function shouldConfirmMetadataEquality()
     {
         // given
-        $metadata = $this->createMethodMetadata();
+        $metadataFirst = $this->createMethodMetadata();
+        $metadataSecond = clone $metadataFirst;
 
         // when
-        $isEqual = $metadata->equalTo($metadata);
+        $isEqual = $metadataFirst->equalTo($metadataSecond);
 
         // then
         $this->assertTrue($isEqual);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldNotConfirmMetadataEquality()
+    {
+        // given
+        $metadataFirst = $this->createMethodMetadata();
+        $metadataSecond = clone $metadataFirst;
+        $metadataSecond->connection = 'not_default';
+
+        // when
+        $isEqual = $metadataFirst->equalTo($metadataSecond);
+
+        // then
+        $this->assertFalse($isEqual);
     }
 
     /**
