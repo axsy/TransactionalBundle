@@ -5,19 +5,44 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
+        <parameter key="axsy_transactional.annotation_driver.class">Axsy\TransactionalBundle\Metadata\Driver\AnnotationDriver</parameter>
+        <parameter key="axsy_transactional.driver_chain.class">Metadata\Driver\DriverChain</parameter>
+        <parameter key="axsy_transactional.lazy_loading_driver.class">Metadata\Driver\LazyLoadingDriver</parameter>
         <parameter key="axsy_transactional.interceptor.class">Axsy\TransactionalBundle\Interception\MethodTransactionalInterceptor</parameter>
-        <parameter key="axsy_transactional.pointcut.class">Axsy\TransactionalBundle\Interception\TransactionalPointcut</parameter>
+        <parameter key="axsy_transactional.pointcut.class">Axsy\TransactionalBundle\Interception\TransactionPointcut</parameter>
         <parameter key="axsy_transactional.resolver.class">Axsy\TransactionalBundle\Resolver\ConnectionResolver</parameter>
+        <parameter key="axsy_transactional.metadata_factory.class">Metadata\MetadataFactory</parameter>
     </parameters>
 
     <services>
+        <service id="axsy_transactional.annotation_driver" class="%axsy_transactional.annotation_driver.class%" public="false">
+            <argument type="service" id="annotation_reader"/>
+            <argument>%axsy_transactional.default_connection%</argument>
+            <argument>%axsy_transactional.default_isolation%</argument>
+        </service>
+        <service id="axsy_transactional.driver_chain" class="%axsy_transactional.driver_chain.class%" public="false">
+            <argument type="service" id="axsy_transactional.annotation_driver" />
+        </service>
+        <service id="axsy_transactional.metadata_driver" alias="axsy_transactional.driver_chain" public="false"/>
+        <service id="axsy_transactional.lazy_loading_driver" class="%axsy_transactional.lazy_loading_driver.class%" public="false">
+            <argument type="service" id="service_container"/>
+            <argument>axsy_transactional.metadata_driver</argument>
+        </service>
+        <service id="axsy_transactional.metadata_factory" class="%axsy_transactional.metadata_factory.class%" public="false">
+            <argument type="service" id="axsy_transactional.metadata_driver" />
+            <argument>Metadata\ClassHierarchyMetadata</argument>
+            <argument>%kernel.debug%</argument>
+            <call method="setIncludeInterfaces">
+                <argument>true</argument>
+            </call>
+        </service>
         <service id="axsy_transactional.pointcut" class="%axsy_transactional.pointcut.class%">
             <tag name="jms_aop.pointcut" interceptor="axsy_Transactional.interceptor" />
         </service>
         <service id="axsy_transactional.interceptor" class="%axsy_transactional.interceptor.class%">
             <argument type="service" id="doctrine" />
         </service>
-        <service id="axsy_transactional.resolver" class="%axsy_transactional.resolver.class%">
+        <service id="axsy_transactional.resolver" class="%axsy_transactional.resolver.class%" public="false">
             <argument type="service" id="doctrine" />
         </service>
     </services>

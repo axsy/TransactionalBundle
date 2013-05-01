@@ -4,6 +4,7 @@ namespace Axsy\TransactionalBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Doctrine\DBAL\Connection;
 
 /**
  * This is the class that validates and merges configuration from your app/config files
@@ -18,11 +19,19 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('axsy_Transactional');
+        $rootNode = $treeBuilder->root('axsy_transactional');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+            ->children()
+                ->scalarNode('default_connection')
+                    ->cannotBeEmpty()
+                    ->defaultValue('default')
+                ->end()
+                ->scalarNode('default_isolation')
+                    ->cannotBeEmpty()
+                    ->defaultValue(Connection::TRANSACTION_READ_COMMITTED)
+                ->end()
+            ->end();
 
         return $treeBuilder;
     }

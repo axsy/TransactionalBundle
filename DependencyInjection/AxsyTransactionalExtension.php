@@ -22,6 +22,9 @@ class AxsyTransactionalExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter('axsy_transactional.default_connection', $config['default_connection']);
+        $container->setParameter('axsy_transactional.default_isolation', $config['default_isolation']);
+
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
     }
