@@ -21,7 +21,9 @@
             <argument>%axsy_transactional.default_isolation%</argument>
         </service>
         <service id="axsy_transactional.driver_chain" class="%axsy_transactional.driver_chain.class%" public="false">
-            <argument type="service" id="axsy_transactional.annotation_driver" />
+            <argument type="collection">
+                <argument type="service" id="axsy_transactional.annotation_driver" />
+            </argument>
         </service>
         <service id="axsy_transactional.metadata_driver" alias="axsy_transactional.driver_chain" public="false"/>
         <service id="axsy_transactional.lazy_loading_driver" class="%axsy_transactional.lazy_loading_driver.class%" public="false">
@@ -37,10 +39,12 @@
             </call>
         </service>
         <service id="axsy_transactional.pointcut" class="%axsy_transactional.pointcut.class%">
+            <argument type="service" id="axsy_transactional.metadata_factory" />
             <tag name="jms_aop.pointcut" interceptor="axsy_Transactional.interceptor" />
         </service>
         <service id="axsy_transactional.interceptor" class="%axsy_transactional.interceptor.class%">
-            <argument type="service" id="doctrine" />
+            <argument type="service" id="axsy_transactional.metadata_factory" />
+            <argument type="service" id="axsy_transactional.resolver" />
         </service>
         <service id="axsy_transactional.resolver" class="%axsy_transactional.resolver.class%" public="false">
             <argument type="service" id="doctrine" />

@@ -64,7 +64,7 @@ class ClassMetadata extends BaseClassMetadata
             }
 
             // But if it does, well, probably we're dealing with child class with at least one method overriden
-            if ($metadata->name != $methodMetadata->reflection->getDeclaringClass()->name) {
+            if ($metadata->reflection->getMethod($name)->getDeclaringClass()->name != $methodMetadata->class) {
                 // Our assumption is right, let's make sure that both methods has identical metadata declared
                 // First let's check if overriden method also has metadata
                 if (!isset($metadata->methodMetadata[$name])) {

@@ -4,7 +4,7 @@ namespace Axsy\TransactionalBundle\Tests\Fixtures;
 
 use Axsy\TransactionalBundle\Annotation\Transactionable;
 
-class HierarchicalService
+class HierarchicalService extends HierarchicalParentService
 {
     /**
      * @Transactionable
