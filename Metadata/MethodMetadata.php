@@ -14,9 +14,13 @@ class MethodMetadata extends BaseMethodMetadata implements EquatableMethodMetada
 
     public function haveToRollbackOn($name)
     {
-        $key = array_search($name, $this->exceptions);
+        if (!is_null($this->exceptions)) {
+            $key = array_search($name, $this->exceptions);
 
-        return $this->rollbackOnExceptions ? false !== $key : false === $key;
+            return $this->rollbackOnExceptions ? false !== $key : false === $key;
+        } else {
+            return $this->rollbackOnExceptions;
+        }
     }
 
     public function serialize()

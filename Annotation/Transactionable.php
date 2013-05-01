@@ -14,7 +14,7 @@ class Transactionable
     public $connection;
 
     /**
-     * @var string
+     * @var int
      */
     public $isolation;
 

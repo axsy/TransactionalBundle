@@ -42,6 +42,24 @@ class MethodMetadataTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
+    public function shouldRollbackOnAllExceptions()
+    {
+        // given
+        $metadata = $this->createMethodMetadata();
+        $metadata->rollbackOnExceptions = true;
+
+        // when
+        $doRollbackOnSpecifiedException = $metadata->haveToRollbackOn('SpecifiedException');
+        $doRollbackOnOtherException = $metadata->haveToRollbackOn('OtherException');
+
+        // then
+        $this->assertTrue($doRollbackOnSpecifiedException);
+        $this->assertTrue($doRollbackOnOtherException);
+    }
+
+    /**
+     * @test
+     */
     public function shouldRollbackOnException()
     {
         // given

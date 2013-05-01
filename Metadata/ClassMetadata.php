@@ -12,7 +12,7 @@ class ClassMetadata extends BaseClassMetadata
     public $connection;
     public $isolation;
     public $exceptions;
-    public $rollbackOnExceptions;
+    public $rollbackOnExceptions = true;
 
     public function createMethodMetadata($name)
     {
