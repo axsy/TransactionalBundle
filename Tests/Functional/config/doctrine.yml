@@ -1,0 +1,24 @@
+doctrine:
+    dbal:
+        default_connection:           default
+        connections:
+            default:
+                dbname:               pdo_sqlite
+                path:                 %kernel.cache_dir%/db_default.sq3
+            other:
+                dbname:               pdo_sqlite
+                path:                 %kernel.cache_dir%/db_other.sq3
+    orm:
+        default_entity_manager:       default
+        auto_generate_proxy_classes:  true
+        entity_managers:
+            default:
+                connection:           default
+                mappings:
+                    TestBundle:
+                        prefix:       Axsy\TransactionalBundle\Tests\Functional\TestBundle\Entity\Default
+            other:
+                connection:           other
+                mappings:
+                    TestBundle:
+                        prefix:       Axsy\TransactionalBundle\Tests\Functional\TestBundle\Entity\Other
