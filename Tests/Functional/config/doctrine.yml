@@ -1,13 +1,17 @@
+services:
+    em_default:                       @doctrine.orm.default_entity_manager
+    em_other:                         @doctrine.orm.other_entity_manager
+
 doctrine:
     dbal:
         default_connection:           default
         connections:
             default:
-                dbname:               pdo_sqlite
-                path:                 %kernel.cache_dir%/db_default.sq3
+                driver:               pdo_sqlite
+                path:                 %kernel.cache_dir%/db_default.db
             other:
-                dbname:               pdo_sqlite
-                path:                 %kernel.cache_dir%/db_other.sq3
+                driver:               pdo_sqlite
+                path:                 %kernel.cache_dir%/db_other.db
     orm:
         default_entity_manager:       default
         auto_generate_proxy_classes:  true
@@ -16,7 +20,7 @@ doctrine:
                 connection:           default
                 mappings:
                     TestBundle:
-                        prefix:       Axsy\TransactionalBundle\Tests\Functional\TestBundle\Entity\Default
+                        prefix:       Axsy\TransactionalBundle\Tests\Functional\TestBundle\Entity\Main
             other:
                 connection:           other
                 mappings:
