@@ -88,7 +88,7 @@ $bundles = array(
 );
 ```
 
-Please make sure, that `JMS\AopBundle\JMSAopBundle` and `JMS\DiExtraBundle\JMSDiExtraBundle` registred too. They're
+Please make sure, that `JMS\AopBundle\JMSAopBundle` and `JMS\DiExtraBundle\JMSDiExtraBundle` registered too. They're
 already registered in the Symfony Standard Edition distribution out of the box.
 
 Configuration
@@ -205,7 +205,7 @@ class SomeService
     }
 
     /**
-     * @Transactionable(connection="only")
+     * @Transactionable(connection="other")
      */
     public function performRollbackOnVeryBadExceptionOnlyOnOtherConnection()
     {
