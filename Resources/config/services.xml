@@ -12,6 +12,7 @@
         <parameter key="axsy_transactional.pointcut.class">Axsy\TransactionalBundle\Interception\TransactionPointcut</parameter>
         <parameter key="axsy_transactional.resolver.class">Axsy\TransactionalBundle\Resolver\ConnectionResolver</parameter>
         <parameter key="axsy_transactional.metadata_factory.class">Metadata\MetadataFactory</parameter>
+        <parameter key="axsy_transactional.metadata_file_cache.class">Metadata\Cache\FileCache</parameter>
     </parameters>
 
     <services>
@@ -30,12 +31,18 @@
             <argument type="service" id="service_container"/>
             <argument>axsy_transactional.metadata_driver</argument>
         </service>
+        <service id="axsy_transactional.metadata_file_cache" class="%axsy_transactional.metadata_file_cache.class%" public="false">
+            <argument>%kernel.cache_dir%</argument>
+        </service>
         <service id="axsy_transactional.metadata_factory" class="%axsy_transactional.metadata_factory.class%" public="false">
             <argument type="service" id="axsy_transactional.metadata_driver" />
             <argument>Metadata\ClassHierarchyMetadata</argument>
             <argument>%kernel.debug%</argument>
             <call method="setIncludeInterfaces">
                 <argument>true</argument>
+            </call>
+            <call method="setCache">
+                <argument type="service" id="axsy_transactional.metadata_file_cache" />
             </call>
         </service>
         <service id="axsy_transactional.pointcut" class="%axsy_transactional.pointcut.class%">
