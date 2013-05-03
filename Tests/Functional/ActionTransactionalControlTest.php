@@ -52,6 +52,28 @@ class ActionTransactionalControlTest extends WebTestCase
      * @test
      * @runInSeparateProcess
      */
+    public function shouldRollbackOnAnnotatedService()
+    {
+        // given
+        $client = $this->createClient();
+        $this->createDatabaseSchema();
+        $service = $client->getContainer()->get('some_service');
+
+        // when
+        try {
+            $service->doTransactional();
+        } catch(\Exception $e) {
+        }
+
+        // then
+        $em = $client->getContainer()->get('em_other');
+        $this->assertEquals(0, $em->createQuery('SELECT COUNT(u) FROM TestBundle:Entity u')->getSingleScalarResult());
+    }
+
+    /**
+     * @test
+     * @runInSeparateProcess
+     */
     public function shouldRollbackOnAnnotatedActionOnCustomConnection()
     {
         // given

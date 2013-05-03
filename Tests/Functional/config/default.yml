@@ -1,3 +1,8 @@
 imports:
-  - {resource: framework.yml}
-  - {resource: doctrine.yml}
+    - {resource: framework.yml}
+    - {resource: doctrine.yml}
+
+services:
+    some_service:
+        class: Axsy\TransactionalBundle\Tests\Functional\TestBundle\Some\Service
+        arguments: [ "@em_other" ]
