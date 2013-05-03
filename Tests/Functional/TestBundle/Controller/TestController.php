@@ -10,6 +10,18 @@ use Axsy\TransactionalBundle\Tests\Functional\TestBundle\Entity\Other;
 
 class TestController extends Controller
 {
+    public function doNotPerformRollbackOnUnannotatedAction()
+    {
+        $entity = new Main\Entity();
+        $entity->setValue('something');
+
+        $em = $this->container->get('em_default');
+        $em->persist($entity);
+        $em->flush();
+
+        throw new \RuntimeException();
+    }
+
     /**
      * @Transactionable
      */
