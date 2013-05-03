@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Axsy\TransactionalBundle\Metadata\Driver;
 
 use Axsy\TransactionalBundle\Exception\LogicException;
@@ -9,12 +14,30 @@ use Doctrine\DBAL\Connection;
 use Metadata\Driver\DriverInterface;
 use ReflectionMethod;
 
+/**
+ * Builds metadata representation based on Transactionable annotation
+ *
+ * @author Aleksey Orlov <i.trancer@gmail.com>
+ */
 class AnnotationDriver implements DriverInterface
 {
+    /**
+     * Transactionable annotation class
+     */
     const TRANSACTIONABLE = 'Axsy\\TransactionalBundle\\Annotation\\Transactionable';
 
+    /**
+     * @var \Doctrine\Common\Annotations\Reader
+     */
     protected $reader;
 
+    /**
+     * Constructor
+     *
+     * @param Reader $reader Annotation reader to be used
+     * @param $connectionName Default connection name
+     * @param int $isolation Default isolation level
+     */
     public function __construct(Reader $reader, $connectionName, $isolation = Connection::TRANSACTION_READ_COMMITTED)
     {
         $this->reader = $reader;
@@ -22,6 +45,17 @@ class AnnotationDriver implements DriverInterface
         $this->isolation = $isolation;
     }
 
+    /**
+     * Reads associated @Tranasactionable annotations and build metadata representation
+     *
+     * This method omits all annotated parent actions, because that's the job of MetadataFactory
+     * to get and merge them properly
+     *
+     * @param \ReflectionClass $class Reflection to be analysed
+     * @return ClassMetadata|null Metadata representation
+     *
+     * @throws \Axsy\TransactionalBundle\Exception\LogicException in case of invalid annotation parameters
+     */
     public function loadMetadataForClass(\ReflectionClass $class)
     {
         $classMetadata = new ClassMetadata($class->name);

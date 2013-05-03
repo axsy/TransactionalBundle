@@ -10,7 +10,7 @@ class AppKernel extends Kernel
     public function __construct($config)
     {
         if (!is_file($config)) {
-            throw new \InvalidArgumentException(sprintf('"%s" is an invalid path to the kernel configuration',
+            throw new \InvalidArgumentException(sprintf('%s is an invalid path to the kernel configuration',
                 json_encode($config)));
         }
         $this->config = $config;

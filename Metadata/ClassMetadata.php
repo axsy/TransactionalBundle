@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Axsy\TransactionalBundle\Metadata;
 
 use Axsy\TransactionalBundle\Exception\LogicException;
@@ -7,13 +12,40 @@ use Metadata\MergeableClassMetadata as BaseClassMetadata;
 use Metadata\MethodMetadata as BaseMethodMetadata;
 use Metadata\MergeableInterface;
 
+/**
+ * Class metadata
+ *
+ * @author Aleksey Orlov <i.trancer@gmail.com>
+ */
 class ClassMetadata extends BaseClassMetadata
 {
+    /**
+     * @var ID of connection
+     */
     public $connection;
+
+    /**
+     * @var int Transaction isolation level
+     */
     public $isolation;
+
+    /**
+     * @var array<string> Class names of exceptions to be used while making the decision of the rollback
+     */
     public $exceptions;
+
+    /**
+     * @var bool Rollback mode
+     */
     public $rollbackOnExceptions = true;
 
+    /**
+     * Creates method metadata based on definition of class annotatiton
+     *
+     * @param string $name Method name
+     *
+     * @return MethodMetadata
+     */
     public function createMethodMetadata($name)
     {
         $metadata = new MethodMetadata($this->name, $name);
@@ -26,6 +58,13 @@ class ClassMetadata extends BaseClassMetadata
         return $metadata;
     }
 
+    /**
+     * Adds method metadata to the storage
+     *
+     * @param \Metadata\MethodMetadata $metadata
+     *
+     * @throws \Axsy\TransactionalBundle\Exception\LogicException in case of annotating of unacceptable method
+     */
     public function addMethodMetadata(BaseMethodMetadata $metadata)
     {
         // Check cases when @Transactionable isn't allowed (because of proxy classes are being generated)
@@ -45,7 +84,13 @@ class ClassMetadata extends BaseClassMetadata
         parent::addMethodMetadata($metadata);
     }
 
-
+    /**
+     * Merges metadatas of classes (actually, the classes of the inheritance hierarchy)
+     *
+     * @param MergeableInterface $metadata Metadata to be merged
+     *
+     * @throws \Axsy\TransactionalBundle\Exception\LogicException in case of wrong metadata type given or inheritance issues
+     */
     public function merge(MergeableInterface $metadata)
     {
         // We can merge with the same type of metadata only
@@ -82,6 +127,11 @@ class ClassMetadata extends BaseClassMetadata
         parent::merge($metadata);
     }
 
+    /**
+     * Checks, does the class has class-level Transactionable definition
+     *
+     * @return bool
+     */
     public function hasGlobalParams()
     {
         return !is_null($this->connection)
@@ -89,11 +139,21 @@ class ClassMetadata extends BaseClassMetadata
             || !is_null($this->exceptions);
     }
 
+    /**
+     * Checks, is AOP proxy necessary
+     *
+     * @return bool
+     */
     public function isProxyRequired()
     {
         return !empty($this->methodMetadata);
     }
 
+    /**
+     * Serializes metadata
+     *
+     * @return string
+     */
     public function serialize()
     {
         return serialize(array(
@@ -109,6 +169,11 @@ class ClassMetadata extends BaseClassMetadata
         ));
     }
 
+    /**
+     * Unserializes metadata
+     *
+     * @param string $str Serialized metadata string representation
+     */
     public function unserialize($str)
     {
         list(
