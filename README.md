@@ -217,9 +217,9 @@ class SomeService
 Tests
 -----
 
-You can simply run the tests for the bundle, run the following commands from the root of the bundle:
+You can simply run the tests for the bundle, run the following commands from the root of the application:
 
 ```bash
-cp phpunit.xml.desc phpunit.xml
-phpunit -c phpunit.xml
+cp vendor/axsy/transactional-bundle/Axsy/TransactionalBundle/phpunit.xml.desc vendor/axsy/transactional-bundle/Axsy/TransactionalBundle/phpunit.xml
+phpunit -c vendor/axsy/transactional-bundle/Axsy/TransactionalBundle/phpunit.xml
 ```
