@@ -40,7 +40,7 @@
         </service>
         <service id="axsy_transactional.pointcut" class="%axsy_transactional.pointcut.class%">
             <argument type="service" id="axsy_transactional.metadata_factory" />
-            <tag name="jms_aop.pointcut" interceptor="axsy_Transactional.interceptor" />
+            <tag name="jms_aop.pointcut" interceptor="axsy_transactional.interceptor" />
         </service>
         <service id="axsy_transactional.interceptor" class="%axsy_transactional.interceptor.class%">
             <argument type="service" id="axsy_transactional.metadata_factory" />

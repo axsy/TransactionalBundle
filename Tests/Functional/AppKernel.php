@@ -25,6 +25,7 @@ class AppKernel extends Kernel
             new \Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new \JMS\AopBundle\JMSAopBundle(),
             new \JMS\DiExtraBundle\JMSDiExtraBundle($this),
+            new \Axsy\TransactionalBundle\AxsyTransactionalBundle(),
             new TestBundle\TestBundle(),
         );
 

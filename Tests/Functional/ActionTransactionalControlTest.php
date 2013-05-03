@@ -9,12 +9,18 @@ class ActionTransactionalControlTest extends WebTestCase
      */
     public function shouldNotRollbackOnUnannotatedAction()
     {
+        // given
         $client = $this->createClient();
-
         $this->createDatabaseSchema();
 
-        $client->request('get', '/test');
+        // when
+        try {
+            $client->request('get', '/perform-rollback-on-defaults');
+        } catch(\Exception $e) {
+        }
 
-        $this->assertEquals('Hello, Kernel!', $client->getResponse()->getContent());
+        // then
+        $em = $client->getContainer()->get('em_default');
+        $this->assertEquals(0, $em->createQuery('SELECT COUNT(u) FROM TestBundle:Entity u')->getSingleScalarResult());
     }
 }
