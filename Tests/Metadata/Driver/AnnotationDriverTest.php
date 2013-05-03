@@ -128,6 +128,25 @@ class AnnotationDriverTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($methodMetadata->rollbackOnExceptions);
     }
 
+    /**
+     * @test
+     * @expectedException Axsy\TransactionalBundle\Exception\LogicException
+     * @expectedExceptionMessage Values for 'noRollbackFor' and 'rollbackFor' can't be provided at the same time
+     */
+    public function shouldThrowAnExceptionOnWrongDefinition()
+    {
+        // given
+        $driver = $this->getAnnotationDriver();
+
+        // when
+        $metadata = $driver->loadMetadataForClass(
+            new \ReflectionClass('Axsy\\TransactionalBundle\\Tests\\Metadata\\Driver\\Fixtures\\IncorrectAnnotationDefinitionService'));
+
+        // then
+        // @expectedException
+        // @expectedExceptionMessage
+    }
+
     public function getAnnotationDriver($connectionName = 'default')
     {
         return new AnnotationDriver(new AnnotationReader(), $connectionName);
