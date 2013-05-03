@@ -38,14 +38,4 @@ class WebTestCase extends BaseWebTestCase
     {
         return new AppKernel(isset($options['config']) ? $options['config'] : __DIR__ . '/config/default.yml');
     }
-
-    public function serialize()
-    {
-        return $this->config;
-    }
-
-    public function unserialize($str)
-    {
-        $this->__construct($str);
-    }
 }

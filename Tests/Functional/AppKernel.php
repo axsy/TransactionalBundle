@@ -51,4 +51,15 @@ class AppKernel extends Kernel
     {
         return sys_get_temp_dir() . '/axsy_transactional/' . md5($this->config);
     }
+
+
+    public function serialize()
+    {
+        return $this->config;
+    }
+
+    public function unserialize($str)
+    {
+        $this->__construct($str);
+    }
 }

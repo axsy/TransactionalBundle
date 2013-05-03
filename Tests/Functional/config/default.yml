@@ -1,6 +1,7 @@
 imports:
     - {resource: framework.yml}
     - {resource: doctrine.yml}
+    - {resource: transactional.yml}
 
 services:
     some_service:

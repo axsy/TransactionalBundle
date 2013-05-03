@@ -12,7 +12,7 @@ use Doctrine\DBAL\Connection;
  *         "FirstException",
  *         "SecondException"
  *     },
- *     isolation=Connection::TRANSACTION_READ_UNCOMMITTED
+ *     isolation="read_uncommitted"
  * )
  */
 class ClassLevelRollbackAnnotatedService

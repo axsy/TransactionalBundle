@@ -116,7 +116,7 @@ class TestController extends Controller
     }
 
     /**
-     * @Transactionable(isolation=Connection::TRANSACTION_READ_UNCOMMITTED)
+     * @Transactionable(isolation="read_uncommitted")
      */
     public function getIsolationLevelAction()
     {

@@ -34,7 +34,8 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->scalarNode('default_isolation')
                     ->cannotBeEmpty()
-                    ->defaultValue(Connection::TRANSACTION_READ_COMMITTED)
+                    ->defaultValue('read_committed')
+                    ->info('Supported isolations are read_uncommitted, read_committed, repeatable_read, serializable')
                 ->end()
             ->end();
 

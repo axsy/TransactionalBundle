@@ -114,7 +114,7 @@ class ActionTransactionalControlTest extends WebTestCase
 
     /**
      * @test
-     * @runInSeparateProcess
+     * runInSeparateProcess
      */
     public function shouldNotRollbackOnAnnotatedActionOnAllowedExceptions()
     {

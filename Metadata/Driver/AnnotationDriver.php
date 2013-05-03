@@ -9,6 +9,7 @@ namespace Axsy\TransactionalBundle\Metadata\Driver;
 
 use Axsy\TransactionalBundle\Exception\LogicException;
 use Axsy\TransactionalBundle\Metadata\ClassMetadata;
+use Axsy\TransactionalBundle\Util\IsolationLevelMapper;
 use Doctrine\Common\Annotations\Reader;
 use Doctrine\DBAL\Connection;
 use Metadata\Driver\DriverInterface;
@@ -42,7 +43,7 @@ class AnnotationDriver implements DriverInterface
     {
         $this->reader = $reader;
         $this->connectionName = $connectionName;
-        $this->isolation = $isolation;
+        $this->isolation = is_int($isolation) ? $isolation : IsolationLevelMapper::getCode($isolation);
     }
 
     /**
@@ -72,7 +73,8 @@ class AnnotationDriver implements DriverInterface
                 $classMetadata->rollbackOnExceptions = true;
             }
             $classMetadata->connection = $classAnnotation->connection ? : $this->connectionName;
-            $classMetadata->isolation = $classAnnotation->isolation ? : $this->isolation;
+            $classMetadata->isolation =
+                $classAnnotation->isolation ? IsolationLevelMapper::getCode($classAnnotation->isolation) : $this->isolation;
         }
 
         foreach ($class->getMethods(ReflectionMethod::IS_PUBLIC | ReflectionMethod::IS_PROTECTED) as $method) {
@@ -98,7 +100,8 @@ class AnnotationDriver implements DriverInterface
                     }
 
                     $methodMetadata->connection = $methodAnnotation->connection ? : $this->connectionName;
-                    $methodMetadata->isolation = $methodAnnotation->isolation ? : $this->isolation;
+                    $methodMetadata->isolation = $methodAnnotation->isolation ? IsolationLevelMapper::getCode(
+                        $methodAnnotation->isolation) : $this->isolation;
                 }
                 $classMetadata->addMethodMetadata($methodMetadata);
             }

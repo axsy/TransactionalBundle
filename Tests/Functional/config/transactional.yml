@@ -1,0 +1,3 @@
+axsy_transactional:
+    default_connection:   default
+    default_isolation:    read_committed

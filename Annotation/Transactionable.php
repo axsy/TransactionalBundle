@@ -27,7 +27,7 @@ class Transactionable
     /**
      * Transaction isolation level
      *
-     * @var int
+     * @var string
      */
     public $isolation;
 
