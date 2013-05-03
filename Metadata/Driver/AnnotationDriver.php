@@ -66,7 +66,6 @@ class AnnotationDriver implements DriverInterface
                     $methodMetadata->connection = $methodAnnotation->connection ? : $this->connectionName;
                     $methodMetadata->isolation = $methodAnnotation->isolation ? : $this->isolation;
                 }
-
                 $classMetadata->addMethodMetadata($methodMetadata);
             }
         }

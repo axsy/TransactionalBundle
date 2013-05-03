@@ -5,3 +5,27 @@ do_not_perform_rollback_on_unannotated:
 perform_rollback_on_defaults:
     path: /perform-rollback-on-defaults
     defaults: { _controller: TestBundle:Test:performRollbackOnDefaultAnnotation }
+
+perform_rollback_on_annotation_with_custom_connection:
+    path: /perform-rollback-on-annotation-with-custom-connection
+    defaults: { _controller: TestBundle:Test:performRollbackOnAnnotationWithCustomConnection }
+
+perform_rollback_on_annotation_with_allowed_exceptions:
+    path: /perform-rollback-on-annotation-with-allowed-exceptions
+    defaults: { _controller: TestBundle:Test:performRollbackOnAnnotationWithAllowedExceptions }
+
+do_not_perform_rollback_on_annotation_with_allowed_exceptions:
+    path: /do-not-perform-rollback-on-annotation-with-allowed-exceptions
+    defaults: { _controller: TestBundle:Test:doNotPerformRollbackOnAnnotationWithAllowedExceptions }
+
+perform_rollback_on_annotation_with_not_allowed_exceptions:
+    path: /perform-rollback-on-annotation-with-not-allowed-exceptions
+    defaults: { _controller: TestBundle:Test:performRollbackOnAnnotationWithNotAllowedExceptions }
+
+do_not_perform_rollback_on_annotation_with_not_allowed_exceptions:
+    path: /do-not-perform-rollback-on-annotation-with-not-allowed-exceptions
+    defaults: { _controller: TestBundle:Test:doNotPerformRollbackOnAnnotationWithNotAllowedExceptions }
+
+get_isolation_level:
+    path: /get-isolation-level
+    defaults: { _controller: TestBundle:Test:getIsolationLevel }
