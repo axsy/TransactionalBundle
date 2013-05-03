@@ -88,7 +88,7 @@ $bundles = array(
 );
 ```
 
-Please make sure, that `JMS\AopBundle\JMSAopBundle` and `JMS\DiExtraBundle\JMSDiExtraBundle` registered too. They're
+Please make sure, that `JMS\AopBundle\JMSAopBundle` and `JMS\DiExtraBundle\JMSDiExtraBundle` are registered too. They're
 already registered in the Symfony Standard Edition distribution out of the box.
 
 Configuration
